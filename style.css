@@ -1,0 +1,9 @@
+/* main */
+.bookmark-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding: 20px;
+  background: #ccc;
+  border-radius: 5px;
+}

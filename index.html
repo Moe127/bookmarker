@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+      integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Bookmarker</title>
+  </head>
+  <body>
+    <div class="container p-4">
+      <h1>Bookmarker</h1>
+
+      <main class="text-center">
+        <h2>Bookmark your favorite sites</h2>
+
+        <div class="mb-3">
+          <label for="site-name" class="form-label">Site Name</label>
+          <input
+            type="text"
+            name="site-name"
+            id="site-name"
+            class="form-control"
+            placeholder="Bookmark Name"
+            aria-describedby="helpId"
+          />
+          <div
+            class="alert alert-danger mt-2 d-none name-alert"
+            role="alert"
+          ></div>
+        </div>
+        <div class="mb-3">
+          <label for="site-url" class="form-label">Site URL</label>
+          <input
+            type="text"
+            name="site-url"
+            id="site-url"
+            class="form-control"
+            placeholder="Site URL"
+            aria-describedby="helpId"
+          />
+          <div
+            class="alert alert-danger mt-2 d-none url-alert"
+            role="alert"
+          ></div>
+        </div>
+        <div class="d-grid gap-2">
+          <input
+            type="submit"
+            name="submit"
+            id="submit"
+            class="btn btn-primary"
+            value="Submit"
+          />
+          <button class="btn btn-warning d-none" name="update" id="update">
+            Update
+          </button>
+        </div>
+
+        <div id="bookmarks-table"></div>
+
+        <script src="main.js"></script>
+      </main>
+    </div>
+  </body>
+</html>
