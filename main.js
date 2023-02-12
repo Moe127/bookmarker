@@ -7,9 +7,14 @@ var updateBtn = document.getElementById("update");
 
 var nameAlert = document.querySelector(".name-alert");
 var urlAlert = document.querySelector(".url-alert");
-
 var deleteMark;
-var bookmarks;
+
+if (localStorage.getItem("bookmarks")) {
+  displayBookmarks();
+} else {
+  var bookmarks = [];
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+}
 
 // Event listeners
 submitBtn.addEventListener("click", addBookmark);
@@ -22,7 +27,6 @@ siteName.addEventListener("keypress", function (e) {
 siteUrl.addEventListener("keypress", function (e) {
   if (e.key == "Enter" && !submitBtn.classList.contains("d-none"))
     addBookmark();
-  k();
 });
 
 function displayBookmarks() {
@@ -185,5 +189,3 @@ function updateItem(e) {
     siteUrl.value = "";
   });
 }
-
-displayBookmarks();
