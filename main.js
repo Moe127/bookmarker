@@ -32,21 +32,19 @@ function displayBookmarks() {
     bookmarkName.innerHTML = bookmarks[i].siteName;
     bookmarkSite.innerHTML = "view";
     bookmarkSite.classList.add("btn", "btn-primary");
-    var urlRegexp = /(([https\://]|[http\://]))/gi;
     var urlRegex =
       /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-
-    bookmarkSite.setAttribute(
-      "href",
-      `${
-        urlRegex.test(bookmarks[i].siteUrl)
-          ? bookmarks[i].siteUrl
-          : "https://www." +
-            bookmarks[i].siteUrl
-              .replace(/[www.]+/gi, "")
-              .replace(/[.com]+$/gi, ".com")
-      }`
-    );
+    var validUrl = urlRegex.test(bookmarks[i].siteUrl);
+    if (validUrl) {
+      bookmarkSite.setAttribute(
+        "href",
+        "https://www." + bookmarks[i].siteUrl.replace("https://www.", "")
+      );
+    } else {
+      urlAlert.innerHTML = "url is valid";
+      urlAlert.classList.replace("d-none", "d-block");
+      return false;
+    }
     bookmarkSite.setAttribute("target", "_blank");
     bookmarkDelete.innerHTML = "Delete";
     bookmarkUpdate.innerHTML = "Update";
