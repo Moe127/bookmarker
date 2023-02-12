@@ -16,19 +16,6 @@ if (localStorage.getItem("bookmarks")) {
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 }
 
-// Event listeners
-submitBtn.addEventListener("click", addBookmark);
-
-siteName.addEventListener("keypress", function (e) {
-  if (e.key == "Enter" && !submitBtn.classList.contains("d-none"))
-    addBookmark();
-});
-
-siteUrl.addEventListener("keypress", function (e) {
-  if (e.key == "Enter" && !submitBtn.classList.contains("d-none"))
-    addBookmark();
-});
-
 function displayBookmarks() {
   bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
 
@@ -45,7 +32,18 @@ function displayBookmarks() {
     bookmarkName.innerHTML = bookmarks[i].siteName;
     bookmarkSite.innerHTML = "view";
     bookmarkSite.classList.add("btn", "btn-primary");
-    bookmarkSite.setAttribute("href", "https://" + bookmarks[i].siteUrl);
+    var urlRegexp = /(([https\://]|[http\://])|([www]))/gi;
+    bookmarkSite.setAttribute(
+      "href",
+      `${
+        urlRegexp.test(bookmarks[i].siteUrl)
+          ? bookmarks[i].siteUrl
+          : "https://www." +
+            bookmarks[i].siteUrl
+              .replace(/^[www.]+/gi, "")
+              .replace(/[.com]+$/gi, ".com")
+      }`
+    );
     bookmarkSite.setAttribute("target", "_blank");
     bookmarkDelete.innerHTML = "Delete";
     bookmarkUpdate.innerHTML = "Update";
@@ -189,3 +187,16 @@ function updateItem(e) {
     siteUrl.value = "";
   });
 }
+
+// Event listeners
+submitBtn.addEventListener("click", addBookmark);
+
+siteName.addEventListener("keypress", function (e) {
+  if (e.key == "Enter" && !submitBtn.classList.contains("d-none"))
+    addBookmark();
+});
+
+siteUrl.addEventListener("keypress", function (e) {
+  if (e.key == "Enter" && !submitBtn.classList.contains("d-none"))
+    addBookmark();
+});
