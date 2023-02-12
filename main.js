@@ -18,7 +18,6 @@ if (localStorage.getItem("bookmarks")) {
 
 function displayBookmarks() {
   bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-
   // empty the bookmarks table to avoid duplicate values
   bookmarksTable.innerHTML = "";
   // extracting the data from bookmarks and creating HTML elements to present them
@@ -32,19 +31,12 @@ function displayBookmarks() {
     bookmarkName.innerHTML = bookmarks[i].siteName;
     bookmarkSite.innerHTML = "view";
     bookmarkSite.classList.add("btn", "btn-primary");
-    var urlRegex =
-      /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
-    var validUrl = urlRegex.test(bookmarks[i].siteUrl);
-    if (validUrl) {
-      bookmarkSite.setAttribute(
-        "href",
-        "https://www." + bookmarks[i].siteUrl.replace("https://www.", "")
-      );
-    } else {
-      urlAlert.innerHTML = "url is valid";
-      urlAlert.classList.replace("d-none", "d-block");
-      return false;
-    }
+
+    bookmarkSite.setAttribute(
+      "href",
+      "https://www." + bookmarks[i].siteUrl.replace("https://www.", "")
+    );
+
     bookmarkSite.setAttribute("target", "_blank");
     bookmarkDelete.innerHTML = "Delete";
     bookmarkUpdate.innerHTML = "Update";
@@ -121,7 +113,6 @@ function validate(siteName, siteUrl, update = false) {
   urlAlert.classList.replace("d-block", "d-none");
   return true;
 }
-
 function addBookmark() {
   // validating the inputs and putting the result in variable
   var valid = validate(siteName, siteUrl);
@@ -135,6 +126,14 @@ function addBookmark() {
     siteName: siteName.value,
     siteUrl: siteUrl.value,
   };
+  var urlRegex =
+    /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+  var validUrl = urlRegex.test(bookmark.siteUrl);
+  if (!validUrl) {
+    urlAlert.innerHTML = "url is valid";
+    urlAlert.classList.replace("d-none", "d-block");
+    return;
+  }
 
   // adding bookmark to bookmarks
   bookmarks.push(bookmark);
