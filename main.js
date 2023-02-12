@@ -32,15 +32,18 @@ function displayBookmarks() {
     bookmarkName.innerHTML = bookmarks[i].siteName;
     bookmarkSite.innerHTML = "view";
     bookmarkSite.classList.add("btn", "btn-primary");
-    var urlRegexp = /(([https\://]|[http\://])|([www]))/gi;
+    var urlRegexp = /(([https\://]|[http\://]))/gi;
+    var urlRegex =
+      /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+
     bookmarkSite.setAttribute(
       "href",
       `${
-        urlRegexp.test(bookmarks[i].siteUrl)
+        urlRegex.test(bookmarks[i].siteUrl)
           ? bookmarks[i].siteUrl
           : "https://www." +
             bookmarks[i].siteUrl
-              .replace(/^[www.]+/gi, "")
+              .replace(/[www.]+/gi, "")
               .replace(/[.com]+$/gi, ".com")
       }`
     );
